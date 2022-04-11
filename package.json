@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "name": "mixtape-server",
+  "version": "1.0.0",
+  "description": "Server for mixtape",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danagajewski/mixtape-server.git"
+  },
+  "keywords": [
+    "Node",
+    "Rest",
+    "Server",
+    "HTTP"
+  ],
+  "author": "Dana Gajewski, Lior Zippel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danagajewski/mixtape-server/issues"
+  },
+  "homepage": "https://github.com/danagajewski/mixtape-server#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "react-redux": "^7.2.8",
+    "redux": "^4.1.2"
+  }
+}
