@@ -1,0 +1,10 @@
+import mongoose from 'mongoose';
+const UsersSchema = mongoose.Schema({
+  username: String,
+  password: String,
+  email: String,
+  token: String,
+  refresh_token: String,
+  profile_pic: String
+}, {collection: 'notes'});
+export default UsersSchema;

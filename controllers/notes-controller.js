@@ -1,10 +1,8 @@
-import posts from "./notes.js";
-let notes = posts;
+import * as notesDao from "../daos/notes-dao.js";
 
-const createNote = (req, res) => {
+const createNote = async (req, res) => {
   const user = "Dana Gajewski";
   const newNote = req.body;
-  newNote._id = (new Date()).getTime() + '';
   newNote.postedBy = {username: user};
   newNote.likes = 0;
   newNote.comments = 0;
@@ -14,24 +12,23 @@ const createNote = (req, res) => {
   newNote.time = new Date();
   newNote.avatar_image= "https://s3.amazonaws.com/images.berecruited.com/photos/athletes/dashboard/3817216.png?1494963118"
 
-  notes.push(newNote);
-  res.json(newNote);
+  const insertedNote = await notesDao.createNote(newNote);
+  res.json(insertedNote);
 }
-const findAllNotes = (req, res) => {
+const findAllNotes = async (req, res) => {
+  const notes = await notesDao.findAllNotes()
   res.json(notes);
 }
-const updateNote = (req, res) => {
+const updateNote = async (req, res) => {
   const noteId = req.params['nid']
   const updatedNote = req.body;
-  notes = notes.map(note => note._id === noteId ?
-                            updatedNote :
-                            note)
-  res.json(notes);
+  const status = await notesDao.updateNote(noteId, updatedNote);
+  res.json(status);
 }
-const deleteNote = (req, res) => {
+const deleteNote = async (req, res) => {
   const noteId = req.params['nid']
-  notes = notes.filter(note => note._id !== noteId);
-  res.json(notes);
+  const status = await notesDao.deleteNote(noteId);
+  res.json(status);
 }
 
 export default (app) => {
