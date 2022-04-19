@@ -1,25 +1,19 @@
 import * as userDao from '../daos/users-dao.js'
 
-
+const findUserById = async (req, res) => {
+  const userId = req.params.uid;
+  const users = await userDao.findAllUsers()
+  const user = users.find(u => u._id == userId);
+  res.json(user);
+}
 
 const findAllUsers = async (req, res) => {
   const users = await userDao.findAllUsers()
   res.json(users);
 }
 
-const findUserById = async (req, res) => {
-  const userId = req.params['nid']
-  const users = await userDao.findAllUsers()
-  const user = users.find(u => u._id === userId);
-  res.json(user);
-}
-
 const createUser = async (req, res) => {
   const newUser = req.body;
-  newUser._id = (new Date()).getTime() + '';
-  newUser.username = "new user";
-  newUser.password = "";
-  newUser.email = null;
   newUser.token = null;
   newUser.refresh_token = null;
   newUser.profile_pic = null;
@@ -40,10 +34,69 @@ const updateUser = async (req, res) => {
   res.json(status);
 }
 
+const signup = async (req, res) => {
+  const newUser = req.body
+  newUser.token = null;
+  newUser.refresh_token = null;
+  newUser.profile_pic = null;
+  const existingUser = await userDao.findUserByUsername(newUser.username)
+  if (existingUser) {
+    res.sendStatus(403)
+  } else {
+    const actualUser = await userDao
+    .createUser(newUser)
+    req.session['currentUser'] = actualUser
+    res.json(actualUser)
+  }
+}
+
+const signin = async (req, res) => {
+  const existingUser = await userDao
+  .findUserByCredentials(req.body.username, req.body.password)
+  console.log(existingUser);
+  if (existingUser) {
+    req.session['currentUser'] = existingUser
+    return res.send(existingUser)
+  } else {
+    return res.sendStatus(503)
+  }
+}
+
+const profile = (req, res) => {
+  const currentUser = req.session['currentUser']
+  if (currentUser) {
+    res.json(currentUser)
+  } else {
+    res.sendStatus(503)
+  }
+}
+
+const signout = (req, res) => {
+  req.session.destroy()
+  res.sendStatus(200)
+}
+
+const findUserByCredentials = async (req, res) => {
+  const crendentials = req.body
+  const email = crendentials.email
+  const password = crendentials.password
+  const user = await userDao.findUserByCredentials(email, password)
+  if (user) {
+    res.sendStatus(200)
+  } else {
+    res.sendStatus(403)
+  }
+}
 
 export default (app) => {
-  app.get('/api/users', findAllUsers);
+  app.post('/api/signup', signup);
+  app.post('/api/signin', signin);
+  app.post('/api/signout', signout);
+  app.post('/api/profile', profile);
+
   app.get('/api/users/:uid', findUserById);
+  app.get('/api/users', findAllUsers);
+  app.post('/api/users/credentials', findUserByCredentials)
   app.post('/api/users', createUser);
   app.delete('/api/users/:uid', deleteUser);
   app.put('/api/users/:uid', updateUser);

@@ -6,5 +6,5 @@ const UsersSchema = mongoose.Schema({
   token: String,
   refresh_token: String,
   profile_pic: String
-}, {collection: 'notes'});
+}, {collection: 'users'});
 export default UsersSchema;
