@@ -30,6 +30,7 @@
     "express-session": "^1.17.2",
     "mongoose": "^6.2.11",
     "react-redux": "^7.2.8",
-    "redux": "^4.1.2"
+    "redux": "^4.1.2",
+    "spotify-web-api-node": "^5.0.2"
   }
 }

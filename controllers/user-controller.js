@@ -31,6 +31,8 @@ const updateUser = async (req, res) => {
   const userId = req.params['uid'];
   const updatedUser = req.body;
   const status = await userDao.updateUser(userId, updatedUser);
+  const users = await userDao.findAllUsers()
+  req.session['currentUser'] = users.find(u => u._id == userId)
   res.json(status);
 }
 
