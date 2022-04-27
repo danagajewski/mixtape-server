@@ -6,8 +6,10 @@ import notesController from "./controllers/notes-controller.js";
 import spotifyControllerNew from "./controllers/spotify-controller-new.js";
 import mongoose from "mongoose";
 import followersController from "./controllers/followers-controller.js";
-const CONNECTION_STRING = "mongodb+srv://dgajewski:dontstealmydata@mixtape.f3ojk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";//process.env.MIXTAPE_DB_CONNECTION_STRING;
-mongoose.connect(CONNECTION_STRING);
+const CONNECTION_STRING = "mongodb+srv://lzippel:dontstealmydata@mixtape.f3ojk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"//process.env.MIXTAPE_DB_CONNECTION_STRING
+console.log(process.env.CONNECTION_STRING)
+// mongoose.connect(process.env.CONNECTION_STRING);
+mongoose.connect(CONNECTION_STRING)
 const app = express();
 app.use(cors({credentials: true,
   origin: 'http://localhost:3000'
