@@ -40,6 +40,7 @@ const signup = async (req, res) => {
   newUser.token = null;
   newUser.refresh_token = null;
   newUser.profile_pic = null;
+  newUser.admin = false;
   const existingUser = await userDao.findUserByUsername(newUser.username)
   if (existingUser) {
     res.sendStatus(403)

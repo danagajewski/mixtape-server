@@ -5,6 +5,7 @@ const UsersSchema = mongoose.Schema({
   email: String,
   token: String,
   refresh_token: String,
-  profile_pic: String
+  profile_pic: String,
+  admin: Boolean
 }, {collection: 'users'});
 export default UsersSchema;
