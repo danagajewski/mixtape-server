@@ -2,8 +2,7 @@ import * as userDao from '../daos/users-dao.js'
 
 const findUserById = async (req, res) => {
   const userId = req.params.uid;
-  const users = await userDao.findAllUsers()
-  const user = users.find(u => u._id == userId);
+  const user = await userDao.findUserById(userId)
   res.json(user);
 }
 
@@ -55,7 +54,6 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   const existingUser = await userDao
   .findUserByCredentials(req.body.username, req.body.password)
-  console.log(existingUser);
   if (existingUser) {
     req.session['currentUser'] = existingUser
     return res.send(existingUser)
