@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const NotesSchema = mongoose.Schema({
-  postedBy: {username: String},
+  postedBy: {username: String, profilePicture : String},
   tuit: String,
   likes: Number,
   dislikes: Number,

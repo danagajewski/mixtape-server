@@ -1,17 +1,18 @@
 import * as notesDao from "../daos/notes-dao.js";
 
 const createNote = async (req, res) => {
-  const user = req.body.user;
-  const newNote = req.body;
-  console.log(req)
-  newNote.postedBy = {username: user};
+  const user = req.body.username;
+  //const newNote = req.body;
+  const newNote = {}
+  console.log(req.body)
+  newNote.postedBy = {username: user, profilePicture : req.body.profilePicture};
   newNote.likes = 0;
   newNote.comments = 0;
   newNote.retuits = 0;
   newNote.dislikes = 0;
-  newNote.userAvatar = req.body.profilePicture
+  newNote.songId = req.body.songId
   newNote.time = new Date();
-
+  console.log(newNote)
 
   const insertedNote = await notesDao.createNote(newNote);
   res.json(insertedNote);
