@@ -8,7 +8,7 @@ const NotesSchema = mongoose.Schema({
   retuits: Number,
   time: Date,
   songId: String,
-  profile_pic: String,
+  profilePicture: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserModel'}
