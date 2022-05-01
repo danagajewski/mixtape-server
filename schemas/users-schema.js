@@ -6,6 +6,7 @@ const UsersSchema = mongoose.Schema({
   token: String,
   refresh_token: String,
   profile_pic: String,
-  admin: Boolean
+  admin: Boolean,
+  verified: Boolean
 }, {collection: 'users'});
 export default UsersSchema;
