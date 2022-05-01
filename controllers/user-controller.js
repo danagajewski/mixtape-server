@@ -107,7 +107,7 @@ export default (app) => {
   app.post('/api/users/credentials', findUserByCredentials)
   app.post('/api/users', createUser);
   app.delete('/api/users/:uid', deleteUser);
-  app.put('/api/users/:uid', updateMyUser);
-  app.put('/api/users/my/:uid', updateUser);
+  app.put('/api/my/:uid', updateMyUser);
+  app.put('/api/users/:uid', updateUser);
 
 }
