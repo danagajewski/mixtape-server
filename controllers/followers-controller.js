@@ -7,9 +7,15 @@ const follow = async (req, res) => {
   const insertedNote = await followersDao.follow(follow);
   res.json(insertedNote);
 }
-const findAllFollowers = async (req, res) => {
+const findFollowers = async (req, res) => {
   const profileId = req.params.pid;
-  const follows = await followersDao.findAllFollowers(profileId)
+  console.log(profileId)
+  const follows = await followersDao.findFollowers(profileId)
+  res.json(follows);
+}
+
+const findAllFollowers = async (req, res) => {
+  const follows = await followersDao.findAllFollowers()
   res.json(follows);
 }
 
@@ -23,7 +29,6 @@ const findFollow = async (req, res) => {
 
 
 const unfollow = async (req, res) => {
-  console.log(req.body)
   const follower = req.body.follower;
   const followed = req.body.followed;
   const follow = {follower: follower, followed: followed}
@@ -33,7 +38,8 @@ const unfollow = async (req, res) => {
 
 export default (app) => {
   app.post('/api/followers', follow);
-  app.get('/api/followers/:pid', findAllFollowers);
+  app.get('/api/followers', findAllFollowers);
+  app.get('/api/followers/:pid', findFollowers);
   app.get('/api/followers/:followerId/:followedId', findFollow);
   app.post('/api/followers/unfollow', unfollow);
 }
